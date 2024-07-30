@@ -227,7 +227,7 @@ def generate_sudoku(size, removed):
     return board
 
 class Cell:
-    def __init(self, value, row, col, screen):
+    def __init__(self, value, row, col, screen):
         #Constructor for the Cell class
         pass
 
