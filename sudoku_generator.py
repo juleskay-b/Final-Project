@@ -7,3 +7,4 @@ class Cell:
 
 class Board:
     pass
+
