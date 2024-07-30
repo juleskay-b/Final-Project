@@ -225,3 +225,63 @@ def generate_sudoku(size, removed):
     sudoku.remove_cells()
     board = sudoku.get_board()
     return board
+
+class Cell:
+    def __init(self, value, row, col, screen):
+        #Constructor for the Cell class
+        pass
+
+    def set_cell_value(self, value):
+        #setter for this cell's value
+        pass
+
+    def set_sketched_value(self, value):
+        #Setter for this cell’s sketched value
+        pass
+
+    def draw(self):
+        #Draws this cell, along with the value inside it.
+        #If this cell has a nonzero value, that value is displayed.
+        #Otherwise, no value is displayed in the cell.
+        #The cell is outlined red if it is currently selected.'''
+        pass
+
+    pass
+
+class Board:
+    def __init__(self, width, height, screen, difficulty):
+        pass
+
+    def draw(self):
+        pass
+
+    def select(self, row, col):
+        pass
+
+    def click(self, row, col):
+        pass
+
+    def clear(self):
+        pass
+
+    def sketch(self, value)
+        pass
+
+    def place_number(self, value)
+        pass
+
+    def reset_to_original(self)
+        pass
+
+    def is_full(self)
+        pass
+    def update_board(self):
+        pass
+
+    def find_empty(self):
+        pass
+
+    def check_board(self):
+        pass
+
+    pass
