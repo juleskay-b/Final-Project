@@ -25,7 +25,10 @@ class SudokuGenerator:
     '''
 
     def __init__(self, row_length, removed_cells):
-        pass
+        self.row_length = row_length
+        self.removed_cells = removed_cells
+        self.box_length = int(math.sqrt(row_length))
+        self.board = [[0 for i in range(self.row_length)] for i in range(self.row_length)]
 
     '''
 	Returns a 2D python list of numbers which represents the board
@@ -35,7 +38,7 @@ class SudokuGenerator:
     '''
 
     def get_board(self):
-        pass
+        return self.board
 
     '''
 	Displays the board to the console
@@ -46,7 +49,11 @@ class SudokuGenerator:
     '''
 
     def print_board(self):
-        pass
+        for row in self.board:
+            for i in row:
+                print(i, end=" ")
+            print("")
+        return
 
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
@@ -60,7 +67,10 @@ class SudokuGenerator:
     '''
 
     def valid_in_row(self, row, num):
-        pass
+        for i in self.board[row]:
+            if i == num:
+                return False
+        return True
 
     '''
 	Determines if num is contained in the specified column (vertical) of the board
@@ -74,7 +84,11 @@ class SudokuGenerator:
     '''
 
     def valid_in_col(self, col, num):
-        pass
+        for i in self.board:
+            if i[col] == num:
+                return False
+            else:
+                return True
 
     '''
 	Determines if num is contained in the 3x3 box specified on the board
@@ -90,7 +104,11 @@ class SudokuGenerator:
     '''
 
     def valid_in_box(self, row_start, col_start, num):
-        pass
+        for i in range(row_start, row_start + self.box_length):
+            for j in range(col_start, col_start + self.box_length):
+                if self.board[i][j] == num:
+                    return False
+        return True
 
     '''
     Determines if it is valid to enter num at (row, col) in the board
@@ -104,7 +122,9 @@ class SudokuGenerator:
     '''
 
     def is_valid(self, row, col, num):
-        pass
+        if self.valid_in_row(row, num) and self.valid_in_col(col, num) and self.valid_in_box(row - row % self.box_length, col - col % self.box_length, num):
+            return True
+        return False
 
     '''
     Fills the specified 3x3 box with values
@@ -118,7 +138,11 @@ class SudokuGenerator:
     '''
 
     def fill_box(self, row_start, col_start):
-        pass
+        digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        random.shuffle(digits)
+        for i in range(self.box_length):
+            for j in range(self.box_length):
+                self.board[row_start + i][col_start + j] = digits.pop()
 
     '''
     Fills the three boxes along the main diagonal of the board
@@ -129,7 +153,8 @@ class SudokuGenerator:
     '''
 
     def fill_diagonal(self):
-        pass
+        for i in range(0, self.row_length, self.box_length):
+            self.fill_box(i, i)
 
     '''
     DO NOT CHANGE
@@ -184,6 +209,7 @@ class SudokuGenerator:
         self.fill_diagonal()
         self.fill_remaining(0, self.box_length)
 
+
     '''
     Removes the appropriate number of cells from the board
     This is done by setting some values to 0
@@ -198,7 +224,13 @@ class SudokuGenerator:
     '''
 
     def remove_cells(self):
-        pass
+        total_removed = 0
+        while total_removed < self.removed_cells:
+            row = random.randint(0, self.row_length - 1)
+            col = random.randint(0, self.row_length - 1)
+            if self.board[row][col] != 0:
+                self.board[row][col] = 0
+                total_removed += 1
 
 
 '''
@@ -264,16 +296,16 @@ class Board:
     def clear(self):
         pass
 
-    def sketch(self, value)
+    def sketch(self, value):
         pass
 
-    def place_number(self, value)
+    def place_number(self, value):
         pass
 
-    def reset_to_original(self)
+    def reset_to_original(self):
         pass
 
-    def is_full(self)
+    def is_full(self):
         pass
     def update_board(self):
         pass
@@ -285,3 +317,4 @@ class Board:
         pass
 
     pass
+
