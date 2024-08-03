@@ -1,4 +1,5 @@
 import math, random
+from constants import *
 
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
@@ -282,9 +283,16 @@ class Cell:
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+        self.size = 9
         pass
 
     def draw(self):
+        sudoku = generate_sudoku(self.size, self.difficulty)
+
         pass
 
     def select(self, row, col):
