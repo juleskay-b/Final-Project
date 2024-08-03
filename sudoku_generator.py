@@ -88,8 +88,7 @@ class SudokuGenerator:
         for i in self.board:
             if i[col] == num:
                 return False
-            else:
-                return True
+        return True
 
     '''
 	Determines if num is contained in the 3x3 box specified on the board
