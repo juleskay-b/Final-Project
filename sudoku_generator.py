@@ -248,32 +248,56 @@ class Cell:
 
     pass
 
-class Board:
+import pygame
+class Board: #rohan
     def __init__(self, width, height, screen, difficulty):
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+        self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
+        self.selected_cell = None
+        self.font = pygame.font.SysFont(None, 40)
+
+    def draw(self): #rohan
+        for i in range(10):
+            thickness = bold_line_thickness if i % 3 == 0 else 1
+            pygame.draw.line(self.screen, (0, 0, 0), (i * cell_size, 0), (i * cell_size, self.height), thickness)
+            pygame.draw.line(self.screen, (0, 0, 0), (0, i * cell_size), (self.width, i * cell_size), thickness)
+
+    def select(self, row, col): #rohan
+        if self.selected_cell:
+            self.selected_cell.selected = False
+        self.selected_cell = self.cells[row][col]
+        self.selected_cell.selected = True
+
+    def click(self, row, col): #rohan
+        x, y = pygame.mouse.get_pos()
+        cell_size = 60
+        row = y // cell_size
+        col = x // cell_size
+
+        if 0 <= row < 9 and 0 <= col < 9:
+            return row, col
+        return None
+
+    def clear(self): #rohan
+        if self.selected_cell and self.selected_cell.selected:
+            self.selected_cell.value = None
+
+    def sketch(self, value): #rohan
+        if self.selected_cell and self.selected_cell.selected:
+            self.selected_cell.sketch = value
+
+    def place_number(self, value):
+
         pass
 
-    def draw(self):
+    def reset_to_original(self):
+
         pass
 
-    def select(self, row, col):
-        pass
-
-    def click(self, row, col):
-        pass
-
-    def clear(self):
-        pass
-
-    def sketch(self, value)
-        pass
-
-    def place_number(self, value)
-        pass
-
-    def reset_to_original(self)
-        pass
-
-    def is_full(self)
+    def is_full(self):
         pass
     def update_board(self):
         pass
