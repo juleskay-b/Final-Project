@@ -62,6 +62,7 @@ def draw_game_start(screen):
             if event.type == pygame.QUIT:
                 sys.exit()
 
+            #Select difficulty from buttons
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     return "easy"
@@ -84,6 +85,7 @@ def draw_board():
         pygame.draw.line(screen, LINE_COLOR, (i*BOX_SIZE, 0), (i*BOX_SIZE, HEIGHT), LINE_WIDTH)
 
 def draw_numbers():
+    #Draws the numbers for the base of the level
     number_font = pygame.font.Font(None, NUMBER_FONT)
     num1_surf = number_font.render("1", 0, NUMBER_COLOR)
     num2_surf = number_font.render("2", 0, NUMBER_COLOR)
@@ -95,6 +97,7 @@ def draw_numbers():
     num8_surf = number_font.render("8", 0, NUMBER_COLOR)
     num9_surf = number_font.render("9", 0, NUMBER_COLOR)
 
+    #Renders the numbers
     for row in range(SIZE):
         for col in range(SIZE):
             if board[row][col] == 1:
@@ -126,6 +129,7 @@ def draw_numbers():
                 screen.blit(num9_surf, num9_rect)
 
 def select_box(col, row):
+    #Function to highlight the user-selected box. Box will remain highlighted and may be selected again.
     select_surface = pygame.Surface(size=(WIDTH//SIZE - 2, HEIGHT//SIZE - 2))
     select_surface.fill(SELECT_COLOR)
     screen.blit(select_surface, (col*BOX_SIZE + 3, row*BOX_SIZE + 3))
@@ -133,6 +137,8 @@ def select_box(col, row):
 
 
 def fill_box(num, row, col):
+    #Fills the box with a number - this has an error where a box can be filled with multiple numbers. I'm assuming this
+    # has to do with an error allowing a box to be selected multiple times.
     number_font = pygame.font.Font(None, NUMBER_FONT)
     add_num1_surf = number_font.render("1", 0, USER_NUMBER_COLOR)
     add_num2_surf = number_font.render("2", 0, USER_NUMBER_COLOR)
@@ -172,7 +178,10 @@ def fill_box(num, row, col):
         add_num9_rect = add_num9_surf.get_rect(center=(col * BOX_SIZE + BOX_SIZE / 2, row * BOX_SIZE + BOX_SIZE / 2))
         screen.blit(add_num9_surf, add_num9_rect)
 
-    board[row][col] = num
+    if board[row][col] == 0:
+        board[row][col] = num
+    else:
+        return
 
     pygame.display.update()
 
@@ -246,6 +255,7 @@ if __name__ == "__main__":
                 elif pygame.key.get_pressed()[pygame.K_9]:
                     fill_box(9, row, col)
 
+#JULIA - Code below has errors - please correct/rewrite
                 if 0 not in board[0] and 0 not in board[1] and 0 not in board[2] and 0 not in board[3] and 0 not in board[4] and 0 not in board[5] and 0 not in board[6] and 0 not in board[7] and 0 not in board[8]:
                     completed = True
                     finished = SudokuGenerator(9, 0)
@@ -261,15 +271,24 @@ if __name__ == "__main__":
                     draw_game_over(screen, correct)
                     pygame.display.update()
 
+                    # JULIA - The above code (determine if the final board is correct) does not work. Please rewrite
+
                     if event.type == pygame.KEYDOWN:
                         if pygame.key.get_pressed()[pygame.K_m]:
                             correct = True
                             completed = False
 
-                            draw_game_start(screen)
-                            pygame.display.update()
+                            difficulty = draw_game_start(screen)
+                            if difficulty == "easy":
+                                board = generate_sudoku(9, 2)
+                            elif difficulty == "medium":
+                                board = generate_sudoku(9, 40)
+                            elif difficulty == "hard":
+                                board = generate_sudoku(9, 50)
 
-
+                            screen.fill(BG_COLOR)
+                            draw_board()
+                            draw_numbers()
 
 
 
@@ -284,11 +303,3 @@ if __name__ == "__main__":
 
 
         pygame.display.update()
-
-
-
-
-
-
-
-

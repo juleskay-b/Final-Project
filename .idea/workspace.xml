@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4609058d-75fb-416f-b963-9c1c3156901c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+=======
+>>>>>>> rohan
       <change beforePath="$PROJECT_DIR$/sudoku.py" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +25,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -34,15 +42,21 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+<<<<<<< HEAD
     &quot;Python.sudoku.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Julia&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/julia/PycharmProjects/pythonProject/su.py&quot;,
+=======
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;rohan&quot;,
+>>>>>>> rohan
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+<<<<<<< HEAD
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.tools&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -71,6 +85,12 @@
       <method v="2" />
     </configuration>
   </component>
+=======
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+>>>>>>> rohan
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -87,6 +107,11 @@
       <option name="presentableId" value="Default" />
       <updated>1722372507446</updated>
       <workItem from="1722372508882" duration="302000" />
+      <workItem from="1722447471403" duration="3678000" />
+      <workItem from="1722621400061" duration="1541000" />
+      <workItem from="1722632246166" duration="593000" />
+      <workItem from="1722706216743" duration="2159000" />
+      <workItem from="1722727642245" duration="163000" />
     </task>
     <servers />
   </component>
@@ -94,6 +119,10 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+<<<<<<< HEAD
+=======
+    <MESSAGE value="Merge branch 'main' of https://github.com/juleskay-b/Final-Project" />
+>>>>>>> rohan
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
