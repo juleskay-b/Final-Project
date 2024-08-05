@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="4609058d-75fb-416f-b963-9c1c3156901c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 <<<<<<< HEAD
@@ -11,6 +12,10 @@
 =======
 >>>>>>> rohan
       <change beforePath="$PROJECT_DIR$/sudoku.py" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku.py" afterDir="false" />
+=======
+    <list default="true" id="4609058d-75fb-416f-b963-9c1c3156901c" name="Changes" comment="emily">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Emily
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +45,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
 <<<<<<< HEAD
@@ -59,6 +65,19 @@
 <<<<<<< HEAD
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.tools&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Emily",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+>>>>>>> Emily
   }
 }</component>
   <component name="RunManager">
@@ -106,23 +125,53 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1722372507446</updated>
+<<<<<<< HEAD
       <workItem from="1722372508882" duration="302000" />
       <workItem from="1722447471403" duration="3678000" />
       <workItem from="1722621400061" duration="1541000" />
       <workItem from="1722632246166" duration="593000" />
       <workItem from="1722706216743" duration="2159000" />
       <workItem from="1722727642245" duration="163000" />
+=======
+      <workItem from="1722372508882" duration="6103000" />
+>>>>>>> Emily
     </task>
+    <task id="LOCAL-00001" summary="emily">
+      <option name="closed" value="true" />
+      <created>1722372828886</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1722372828886</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< HEAD
   <component name="VcsManagerConfiguration">
 <<<<<<< HEAD
 =======
     <MESSAGE value="Merge branch 'main' of https://github.com/juleskay-b/Final-Project" />
 >>>>>>> rohan
     <option name="LAST_COMMIT_MESSAGE" value="" />
+=======
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="emily" />
+    <option name="LAST_COMMIT_MESSAGE" value="emily" />
+>>>>>>> Emily
   </component>
 </project>
