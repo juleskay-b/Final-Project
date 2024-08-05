@@ -227,26 +227,38 @@ def generate_sudoku(size, removed):
     return board
 
 class Cell:
-    def __init(self, value, row, col, screen):
-        #Constructor for the Cell class
-        pass
+    def __init(self, value, row, col, screen, selected):
+        self.value = value
+        self.row = row
+        self.col = col
+        self.screen = screen
+        self.selected = selected
+        self.sketched_value = None
+        self.cell_size = 50
+        self.font = pygame.font.Font(None, 36)
 
     def set_cell_value(self, value):
-        #setter for this cell's value
-        pass
+        self.value = value
 
     def set_sketched_value(self, value):
-        #Setter for this cell’s sketched value
-        pass
+        self.sketched_value = value
 
     def draw(self):
-        #Draws this cell, along with the value inside it.
-        #If this cell has a nonzero value, that value is displayed.
-        #Otherwise, no value is displayed in the cell.
-        #The cell is outlined red if it is currently selected.'''
-        pass
+        backgound = (255, 255, 255)
 
-    pass
+        if self.selected:
+            outline = (255, 0, 0)
+        else:
+            outline = (0, 0, 0)
+
+        pygame.draw.rect(self.screen, backgound, pygame.Rect(self.col * cell_size, self.row * cell_size, cell_size, cell_size))
+        pygame.draw.rect(self.screen, outline, pygame.Rect(self.col * cell_size, self.row * cell_size, cell_size, cell_size), 2)
+
+        if self.value != 0:
+            text_surface = self.font.render(str(self.value), True, (0, 0, 0))  # Black text color
+            text_rect = text_surface.get_rect(
+                center=(self.col * self.cell_size + self.cell_size // 2, self.row * self.cell_size + self.cell_size // 2))
+            self.screen.blit(text_surface, text_rect)
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
@@ -264,17 +276,25 @@ class Board:
     def clear(self):
         pass
 
-    def sketch(self, value)
+    def sketch(self, value):
         pass
 
-    def place_number(self, value)
-        pass
+    def place_number(self, value):
+        if self.selected_cell:
+            row, col = self.selected_cell
+            self.cells[row][col].set_cell_value(value)
 
-    def reset_to_original(self)
-        pass
+    def reset_to_original(self):
+        for i in range(self.width):
+            for j in range(self.height):
+                self.cells[i][j].set_cell_value(0)
 
-    def is_full(self)
-        pass
+    def is_full(self):
+        for row in self.cells:
+            for cell in row:
+                if cell.value == 0:
+                    return False
+        return True
     def update_board(self):
         pass
 
