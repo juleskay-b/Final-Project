@@ -199,7 +199,6 @@ def validate(board):
         else:
             return True
 
-
 def draw_game_over(screen, correct):
     game_over_font = pygame.font.Font(None, 40)
     screen.fill(BG_COLOR)
@@ -229,7 +228,7 @@ if __name__ == "__main__":
 
     difficulty = draw_game_start(screen)
     if difficulty == "easy":
-        board = generate_sudoku(9, 2)
+        board = generate_sudoku(9, 30)
     elif difficulty == "medium":
         board = generate_sudoku(9, 40)
     elif difficulty == "hard":
@@ -269,14 +268,11 @@ if __name__ == "__main__":
                 elif pygame.key.get_pressed()[pygame.K_9]:
                     fill_box(9, row, col)
 
-#JULIA - Code below has errors - please correct/rewrite
                 if 0 not in board[0] and 0 not in board[1] and 0 not in board[2] and 0 not in board[3] and 0 not in board[4] and 0 not in board[5] and 0 not in board[6] and 0 not in board[7] and 0 not in board[8]:
                     completed = True
                     correct = validate(board)
                     draw_game_over(screen, correct)
                     pygame.display.update()
-
-                    # JULIA - The above code (determine if the final board is correct) does not work. Please rewrite
 
                     if event.type == pygame.KEYDOWN:
                         if pygame.key.get_pressed()[pygame.K_m]:
@@ -295,15 +291,6 @@ if __name__ == "__main__":
                             draw_board()
                             draw_numbers()
 
-
-
-
-
-                for i in board:
-                    for j in i:
-                        print(j, end=" ")
-                    print("")
-                print("")
 
 
 
