@@ -259,7 +259,7 @@ def generate_sudoku(size, removed):
     return board
 
 class Cell:
-    def __init(self, value, row, col, screen, selected): #Emily
+    def __init(self, value, row, col, screen, selected=False): #Emily
         self.value = value
         self.row = row
         self.col = col
@@ -303,32 +303,6 @@ class Board: #rohan
         self.size = 9
         pass
 
-    def draw(self): #Rohan
-        sudoku = generate_sudoku(self.size, self.difficulty)
-
-        pass
-
-    def select(self, row, col):
-        pass
-
-    def click(self, row, col):
-        pass
-
-    def clear(self):
-        pass
-
-    def sketch(self, value):
-        pass
-
-    def place_number(self, value):
-
-        pass
-
-    def reset_to_original(self): #Rohan
-        self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
-        self.selected_cell = None
-        self.font = pygame.font.SysFont(None, 40)
-
     def draw(self): #rohan
         for i in range(10):
             thickness = bold_line_thickness if i % 3 == 0 else 1
@@ -359,20 +333,16 @@ class Board: #rohan
         if self.selected_cell and self.selected_cell.selected:
             self.selected_cell.sketch = value
 
-    def place_number(self, value):
-
-        pass
-
-    def reset_to_original(self):
-
-        pass
-
-    def is_full(self):
-        pass
-
+    def place_number(self):
         if self.selected_cell: #Emily
             row, col = self.selected_cell
             self.cells[row][col].set_cell_value(value)
+
+    def reset_to_original(self): #Rohan/repeating function
+        self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
+        self.selected_cell = None
+        self.font = pygame.font.SysFont(None, 40)
+        pass
 
     def reset_to_original(self): #Emily
         for i in range(self.width):
