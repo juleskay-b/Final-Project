@@ -78,11 +78,21 @@ def draw_game_start(screen):
 def draw_board():
     #Draw horizontal lines
     for i in range(1, SIZE):
-        pygame.draw.line(screen, LINE_COLOR, (0, i*BOX_SIZE), (WIDTH, i*BOX_SIZE), LINE_WIDTH)
+        if i % 3 == 0:
+            LINE_WIDTH = 5
+            pygame.draw.line(screen, LINE_COLOR, (0, i * BOX_SIZE), (WIDTH, i * BOX_SIZE), LINE_WIDTH)
+        else:
+            LINE_WIDTH = 2
+            pygame.draw.line(screen, LINE_COLOR, (0, i*BOX_SIZE), (WIDTH, i*BOX_SIZE), LINE_WIDTH)
 
     #Draw vertical lines
     for i in range(1, SIZE):
-        pygame.draw.line(screen, LINE_COLOR, (i*BOX_SIZE, 0), (i*BOX_SIZE, HEIGHT), LINE_WIDTH)
+        if i % 3 == 0:
+            LINE_WIDTH = 5
+            pygame.draw.line(screen, LINE_COLOR, (i * BOX_SIZE, 0), (i * BOX_SIZE, HEIGHT), LINE_WIDTH)
+        else:
+            LINE_WIDTH = 2
+            pygame.draw.line(screen, LINE_COLOR, (i*BOX_SIZE, 0), (i*BOX_SIZE, HEIGHT), LINE_WIDTH)
 
 def draw_numbers():
     #Draws the numbers for the base of the level
