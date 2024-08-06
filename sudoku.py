@@ -185,6 +185,20 @@ def fill_box(num, row, col):
 
     pygame.display.update()
 
+def validate(board):
+    sets = []
+    for i in range(len(board)):
+        for j in range(len(board)):
+            num = board[i][j]
+            if num != "0":
+                sets += [(i, num), (num, j), (i // 3, j // 3, num)]
+
+    for i in sets:
+        if sets.count(i) > 1:
+            return False
+        else:
+            return True
+
 
 def draw_game_over(screen, correct):
     game_over_font = pygame.font.Font(None, 40)
@@ -258,16 +272,7 @@ if __name__ == "__main__":
 #JULIA - Code below has errors - please correct/rewrite
                 if 0 not in board[0] and 0 not in board[1] and 0 not in board[2] and 0 not in board[3] and 0 not in board[4] and 0 not in board[5] and 0 not in board[6] and 0 not in board[7] and 0 not in board[8]:
                     completed = True
-                    finished = SudokuGenerator(9, 0)
-                    finished.board = board
-                    for i in range(9):
-                        for j in range(9):
-                            if finished.is_valid(i, j, board[i][j]):
-                                continue
-                            else:
-                                correct = False
-                                break
-
+                    correct = validate(board)
                     draw_game_over(screen, correct)
                     pygame.display.update()
 
