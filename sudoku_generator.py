@@ -303,6 +303,16 @@ class Board: #rohan
         self.size = 9
         pass
 
+    def draw(self): #Rohan
+        sudoku = generate_sudoku(self.size, self.difficulty)
+
+        pass
+
+    def reset_to_original(self): #Rohan
+        self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
+        self.selected_cell = None
+        self.font = pygame.font.SysFont(None, 40)
+
     def draw(self): #rohan
         for i in range(10):
             thickness = bold_line_thickness if i % 3 == 0 else 1
@@ -333,10 +343,11 @@ class Board: #rohan
         if self.selected_cell and self.selected_cell.selected:
             self.selected_cell.sketch = value
 
-    def place_number(self):
+    def is_full(self):
         if self.selected_cell: #Emily
             row, col = self.selected_cell
             self.cells[row][col].set_cell_value(value)
+
 
     def reset_to_original(self): #Rohan/repeating function
         self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
@@ -356,14 +367,4 @@ class Board: #rohan
                     return False
         return True
 
-    def update_board(self):
-        pass
-
-    def find_empty(self):
-        pass
-
-    def check_board(self):
-        pass
-
-    pass
-
+# Julia - removed unused/unwritten functions

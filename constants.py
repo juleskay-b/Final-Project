@@ -7,7 +7,6 @@ NUMBER_COLOR = (33, 26, 25)
 SELECT_COLOR = (196, 189, 179)
 USER_NUMBER_COLOR = (82, 64, 58)
 
-
 #Fonts - can be changed
 NUMBER_FONT = 80
 
