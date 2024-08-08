@@ -4,54 +4,62 @@ import pygame
 from constants import *
 from sudoku_generator import *
 
+# constants I added for sketch function (ana's changes)
+SKETCH_FONT = 20
+SKETCH_COLOR = (100, 100, 100)
+
+# global variables for selected cell & sketched numbers (ana's changes)
+selected_row, selected_col = None, None
+sketched_numbers = {}
+
 def draw_game_start(screen):
     screen.fill(BG_COLOR)
 
-    #Initialize title font
+    # Initialize title font
     start_title_font = pygame.font.Font(None, 100)
     button_font = pygame.font.Font(None, 40)
 
-    #Initialize and draw title
+    # Initialize and draw title
     title_surface = start_title_font.render("Sudoku", 0, LINE_COLOR)
     title_rectangle = title_surface.get_rect(center=(WIDTH//2, HEIGHT//2 -150))
     screen.blit(title_surface, title_rectangle)
 
-    #Initialize buttons
-    #Initialize text first
+    # Initialize buttons
+    # Initialize text first
     easy_text = button_font.render("Easy", 0, WHITE)
     med_text = button_font.render("Medium", 0, WHITE)
     hard_text = button_font.render("Hard", 0, WHITE)
 
     quit_text = button_font.render("Quit", 0, WHITE)
 
-    #Initialize button Background color and text
-    #Easy button
+    # Initialize button Background color and text
+    # Easy button
     easy_surface = pygame.Surface((easy_text.get_size()[0] + 20, easy_text.get_size()[1] + 20))
     easy_surface.fill(LINE_COLOR)
     easy_surface.blit(easy_text, (10, 10))
 
-    #Medium button
+    # Medium button
     med_surface = pygame.Surface((med_text.get_size()[0] + 20, med_text.get_size()[1] + 20))
     med_surface.fill(LINE_COLOR)
     med_surface.blit(med_text, (10, 10))
 
-    #Hard button
+    # Hard button
     hard_surface = pygame.Surface((hard_text.get_size()[0] + 20, hard_text.get_size()[1] + 20))
     hard_surface.fill(LINE_COLOR)
     hard_surface.blit(hard_text, (10, 10))
 
-    #Quit button
+    # Quit button
     quit_surface = pygame.Surface((quit_text.get_size()[0] + 20, quit_text.get_size()[1] + 20))
     quit_surface.fill(LINE_COLOR)
     quit_surface.blit(quit_text, (10, 10))
 
-    #Initialize button rectangles
-    easy_rectangle = easy_surface.get_rect(center=(WIDTH//2 - 150, HEIGHT//2 + 50))
-    med_rectangle = med_surface.get_rect(center=(WIDTH//2, HEIGHT//2 + 50))
-    hard_rectangle = hard_surface.get_rect(center=(WIDTH//2 + 150, HEIGHT//2 + 50))
-    quit_rectangle = quit_surface.get_rect(center=(WIDTH//2, HEIGHT//2 + 150))
+    # Initialize button rectangles
+    easy_rectangle = easy_surface.get_rect(center=(WIDTH // 2 - 150, HEIGHT // 2 + 50))
+    med_rectangle = med_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+    hard_rectangle = hard_surface.get_rect(center=(WIDTH // 2 + 150, HEIGHT // 2 + 50))
+    quit_rectangle = quit_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
 
-    #Draw buttons
+    # Draw buttons
     screen.blit(easy_surface, easy_rectangle)
     screen.blit(med_surface, med_rectangle)
     screen.blit(hard_surface, hard_rectangle)
@@ -62,7 +70,7 @@ def draw_game_start(screen):
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            #Select difficulty from buttons
+            # Select difficulty from buttons
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     return "easy"
@@ -75,16 +83,26 @@ def draw_game_start(screen):
 
         pygame.display.update()
 
-def draw_board():
+def draw_board(screen):
     #Draw horizontal lines
     for i in range(1, SIZE):
-        pygame.draw.line(screen, LINE_COLOR, (0, i*BOX_SIZE), (WIDTH, i*BOX_SIZE), LINE_WIDTH)
+        if i % 3 == 0:
+            LINE_WIDTH = 5
+            pygame.draw.line(screen, LINE_COLOR, (0, i * BOX_SIZE), (WIDTH, i * BOX_SIZE), LINE_WIDTH)
+        else:
+            LINE_WIDTH = 2
+            pygame.draw.line(screen, LINE_COLOR, (0, i*BOX_SIZE), (WIDTH, i*BOX_SIZE), LINE_WIDTH)
 
     #Draw vertical lines
     for i in range(1, SIZE):
-        pygame.draw.line(screen, LINE_COLOR, (i*BOX_SIZE, 0), (i*BOX_SIZE, HEIGHT), LINE_WIDTH)
-
-def draw_numbers():
+        if i % 3 == 0:
+            LINE_WIDTH = 5
+            pygame.draw.line(screen, LINE_COLOR, (i * BOX_SIZE, 0), (i * BOX_SIZE, HEIGHT), LINE_WIDTH)
+        else:
+            LINE_WIDTH = 2
+            pygame.draw.line(screen, LINE_COLOR, (i*BOX_SIZE, 0), (i*BOX_SIZE, HEIGHT), LINE_WIDTH)
+          
+def draw_numbers(screen):
     #Draws the numbers for the base of the level
     number_font = pygame.font.Font(None, NUMBER_FONT)
     num1_surf = number_font.render("1", 0, NUMBER_COLOR)
@@ -128,17 +146,33 @@ def draw_numbers():
                 num9_rect = num9_surf.get_rect(center=(col * BOX_SIZE + BOX_SIZE / 2, row * BOX_SIZE + BOX_SIZE / 2))
                 screen.blit(num9_surf, num9_rect)
 
-def select_box(col, row):
-    #Function to highlight the user-selected box. Box will remain highlighted and may be selected again.
-    select_surface = pygame.Surface(size=(WIDTH//SIZE - 2, HEIGHT//SIZE - 2))
+    #Draw sketched numbers (ana's changes)
+    sketch_font = pygame.font.Font(None, SKETCH_FONT)
+    sketch_surfaces = {n: sketch_font.render(str(n), 0, SKETCH_COLOR) for n in range(1, 10)}
+
+    for (row, col), num in sketched_numbers.items():
+        sketch_rect = sketch_surfaces[num].get_rect(center=(col * BOX_SIZE + BOX_SIZE // 2, row * BOX_SIZE + BOX_SIZE // 2))
+        screen.blit(sketch_surfaces[num], sketch_rect)
+
+def select_box(screen, col, row):
+    # Function to highlight the user-selected box. Box will remain highlighted and may be selected again.
+    #added global variables (ana's changes)
+    global selected_row, selected_col
+    selected_row, selected_col = row, col
+
+    select_surface = pygame.Surface(size=(BOX_SIZE - 2, BOX_SIZE - 2))
     select_surface.fill(SELECT_COLOR)
-    screen.blit(select_surface, (col*BOX_SIZE + 3, row*BOX_SIZE + 3))
+    screen.blit(select_surface, (col * BOX_SIZE + 1, row * BOX_SIZE + 1))
     pygame.display.update()
 
+def fill_box(screen, num, row, col):
+    #ana's changes
+    if (row, col) in sketched_numbers:
+        del sketched_numbers[(row, col)]
 
-def fill_box(num, row, col):
-    #Fills the box with a number - this has an error where a box can be filled with multiple numbers. I'm assuming this
-    # has to do with an error allowing a box to be selected multiple times.
+    #ana's changes
+    pygame.draw.rect(screen, BG_COLOR, (col * BOX_SIZE + 2, row * BOX_SIZE + 2, BOX_SIZE - 4, BOX_SIZE - 4))
+
     number_font = pygame.font.Font(None, NUMBER_FONT)
     add_num1_surf = number_font.render("1", 0, USER_NUMBER_COLOR)
     add_num2_surf = number_font.render("2", 0, USER_NUMBER_COLOR)
@@ -185,6 +219,21 @@ def fill_box(num, row, col):
 
     pygame.display.update()
 
+#addition of sketch function (ana's changes)
+def sketch(screen, num, row, col):
+    sketched_numbers[(row, col)] = num
+
+    sketch_font = pygame.font.Font(None, SKETCH_FONT)
+    sketch_surf = sketch_font.render(str(num), 0, SKETCH_COLOR)
+    sketch_rect = sketch_surf.get_rect(center=(col * BOX_SIZE + BOX_SIZE // 2, row * BOX_SIZE + BOX_SIZE // 2))
+
+    pygame.draw.rect(screen, BG_COLOR, (col * BOX_SIZE + 2, row * BOX_SIZE + 2, BOX_SIZE - 4, BOX_SIZE - 4))
+    draw_numbers(screen)
+
+    screen.blit(sketch_surf, sketch_rect)
+
+    pygame.display.update()
+
 def validate(board):
     sets = []
     for i in range(len(board)):
@@ -199,7 +248,6 @@ def validate(board):
         else:
             return True
 
-
 def draw_game_over(screen, correct):
     game_over_font = pygame.font.Font(None, 40)
     screen.fill(BG_COLOR)
@@ -209,102 +257,189 @@ def draw_game_over(screen, correct):
         text = "Level Failed"
 
     game_over_surf = game_over_font.render(text, 0, LINE_COLOR)
-    game_over_rect = game_over_surf.get_rect(center=(WIDTH//2, HEIGHT//2 - 100))
+    game_over_rect = game_over_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100))
     screen.blit(game_over_surf, game_over_rect)
 
     menu_surf = game_over_font.render("Press M to return to the main menu...", 0, LINE_COLOR)
-    menu_rect = menu_surf.get_rect(center=(WIDTH//2, HEIGHT//2 + 150))
+    menu_rect = menu_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
     screen.blit(menu_surf, menu_rect)
 
     pygame.display.update()
 
-if __name__ == "__main__":
+#reset, restart, & exit buttons(ana's changes)
+def draw_buttons(screen):
+    button_font = pygame.font.Font(None, 40)
 
+    reset_text = button_font.render("Reset", 0, WHITE)
+    restart_text = button_font.render("Restart", 0, WHITE)
+    exit_text = button_font.render("Exit", 0, WHITE)
+
+    reset_surface = pygame.Surface((reset_text.get_size()[0] + 20, reset_text.get_size()[1] + 20))
+    reset_surface.fill(LINE_COLOR)
+    reset_surface.blit(reset_text, (10, 10))
+
+    restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
+    restart_surface.fill(LINE_COLOR)
+    restart_surface.blit(restart_text, (10, 10))
+
+    exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
+    exit_surface.fill(LINE_COLOR)
+    exit_surface.blit(exit_text, (10, 10))
+
+    reset_rectangle = reset_surface.get_rect(center=(WIDTH // 2 - 150, HEIGHT + 40))
+    restart_rectangle = restart_surface.get_rect(center=(WIDTH // 2, HEIGHT + 40))
+    exit_rectangle = exit_surface.get_rect(center=(WIDTH // 2 + 150, HEIGHT + 40))
+
+    screen.blit(reset_surface, reset_rectangle)
+    screen.blit(restart_surface, restart_rectangle)
+    screen.blit(exit_surface, exit_rectangle)
+
+    pygame.display.update()
+
+    return reset_rectangle, restart_rectangle, exit_rectangle
+
+#have the arrow keys switch from empty box to empty box (ana's changes; could need some work maybe idk)
+def handle_arrow_keys(screen, key):
+    global selected_row, selected_col
+    if selected_row is None or selected_col is None:
+        selected_row, selected_col = 0, 0
+    else:
+        original_row, original_col = selected_row, selected_col
+        while True:
+            if key == pygame.K_UP:
+                selected_row = (selected_row - 1) % SIZE
+            elif key == pygame.K_DOWN:
+                selected_row = (selected_row + 1) % SIZE
+            elif key == pygame.K_LEFT:
+                selected_col = (selected_col - 1) % SIZE
+            elif key == pygame.K_RIGHT:
+                selected_col = (selected_col + 1) % SIZE
+            if board[selected_row][selected_col] == 0:
+                break
+            if selected_row == original_row and selected_col == original_col:
+                break
+    select_box(screen, selected_col, selected_row)
+
+#a lot of format change !!! (ana's changes)
+def main_game_loop():
+    #include global variables (ana's changes)
+    global board, initial_board, selected_row, selected_col, sketched_numbers
     pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.font.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
     pygame.display.set_caption("Sudoku")
-    game_over = False
-    completed = False
-    correct = True
-
-    difficulty = draw_game_start(screen)
-    if difficulty == "easy":
-        board = generate_sudoku(9, 2)
-    elif difficulty == "medium":
-        board = generate_sudoku(9, 40)
-    elif difficulty == "hard":
-        board = generate_sudoku(9, 50)
-
-    screen.fill(BG_COLOR)
-    draw_board()
-    draw_numbers()
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN and not completed:
-                x, y = event.pos
-                row = int(y // BOX_SIZE)
-                col = int(x // BOX_SIZE)
-                if board[row][col] == 0:
-                    select_box(col, row)
-            if event.type == pygame.KEYDOWN:
-                if pygame.key.get_pressed()[pygame.K_1]:
-                    fill_box(1, row, col)
-                elif pygame.key.get_pressed()[pygame.K_2]:
-                    fill_box(2, row, col)
-                elif pygame.key.get_pressed()[pygame.K_3]:
-                    fill_box(3, row, col)
-                elif pygame.key.get_pressed()[pygame.K_4]:
-                    fill_box(4, row, col)
-                elif pygame.key.get_pressed()[pygame.K_5]:
-                    fill_box(5, row, col)
-                elif pygame.key.get_pressed()[pygame.K_6]:
-                    fill_box(6, row, col)
-                elif pygame.key.get_pressed()[pygame.K_7]:
-                    fill_box(7, row, col)
-                elif pygame.key.get_pressed()[pygame.K_8]:
-                    fill_box(8, row, col)
-                elif pygame.key.get_pressed()[pygame.K_9]:
-                    fill_box(9, row, col)
+        game_over = False
+        completed = False
+        correct = True
+        #ana's changes
+        sketched_numbers.clear()
+        return_to_menu = False
 
-#JULIA - Code below has errors - please correct/rewrite
-                if 0 not in board[0] and 0 not in board[1] and 0 not in board[2] and 0 not in board[3] and 0 not in board[4] and 0 not in board[5] and 0 not in board[6] and 0 not in board[7] and 0 not in board[8]:
-                    completed = True
-                    correct = validate(board)
-                    draw_game_over(screen, correct)
-                    pygame.display.update()
+        difficulty = draw_game_start(screen)
+        if difficulty == "easy":
+            board = generate_sudoku(9, 30)
+        elif difficulty == "medium":
+            board = generate_sudoku(9, 40)
+        elif difficulty == "hard":
+            board = generate_sudoku(9, 50)
 
-                    # JULIA - The above code (determine if the final board is correct) does not work. Please rewrite
+        #ana's changes
+        initial_board = [row[:] for row in board]
+        screen.fill(BG_COLOR)
+        draw_board(screen)
+        draw_numbers(screen)
+        #ana's changes
+        reset_rectangle, restart_rectangle, exit_rectangle = draw_buttons(screen)
 
+        #ana's changes
+        while not completed and not return_to_menu:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    #ana's changes
+                    if reset_rectangle.collidepoint(x, y):
+                        board = [row[:] for row in initial_board]
+                        sketched_numbers.clear()
+                        selected_row, selected_col = None, None
+                        screen.fill(BG_COLOR)
+                        draw_board(screen)
+                        draw_numbers(screen)
+                        reset_rectangle, restart_rectangle, exit_rectangle = draw_buttons(screen)
+                    elif restart_rectangle.collidepoint(x, y):
+                        completed = True
+                    elif exit_rectangle.collidepoint(x, y):
+                        sys.exit()
+                    elif y < HEIGHT:
+                        row = int(y // BOX_SIZE)
+                        col = int(x // BOX_SIZE)
+                        if board[row][col] == 0:
+                            select_box(screen, col, row)
+                if event.type == pygame.KEYDOWN:
+                    #ana's changes
+                    if selected_row is not None and selected_col is not None:
+                        #insert return function maybe idk(im losing my mind)
+                        if pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                            if event.key == pygame.K_1:
+                                sketch(screen, 1, selected_row, selected_col)
+                            elif event.key == pygame.K_2:
+                                sketch(screen, 2, selected_row, selected_col)
+                            elif event.key == pygame.K_3:
+                                sketch(screen, 3, selected_row, selected_col)
+                            elif event.key == pygame.K_4:
+                                sketch(screen, 4, selected_row, selected_col)
+                            elif event.key == pygame.K_5:
+                                sketch(screen, 5, selected_row, selected_col)
+                            elif event.key == pygame.K_6:
+                                sketch(screen, 6, selected_row, selected_col)
+                            elif event.key == pygame.K_7:
+                                sketch(screen, 7, selected_row, selected_col)
+                            elif event.key == pygame.K_8:
+                                sketch(screen, 8, selected_row, selected_col)
+                            elif event.key == pygame.K_9:
+                                sketch(screen, 9, selected_row, selected_col)
+                        else:
+                            if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                                handle_arrow_keys(screen, event.key)
+                            elif event.key == pygame.K_1:
+                                fill_box(screen, 1, selected_row, selected_col)
+                            elif event.key == pygame.K_2:
+                                fill_box(screen, 2, selected_row, selected_col)
+                            elif event.key == pygame.K_3:
+                                fill_box(screen, 3, selected_row, selected_col)
+                            elif event.key == pygame.K_4:
+                                fill_box(screen, 4, selected_row, selected_col)
+                            elif event.key == pygame.K_5:
+                                fill_box(screen, 5, selected_row, selected_col)
+                            elif event.key == pygame.K_6:
+                                fill_box(screen, 6, selected_row, selected_col)
+                            elif event.key == pygame.K_7:
+                                fill_box(screen, 7, selected_row, selected_col)
+                            elif event.key == pygame.K_8:
+                                fill_box(screen, 8, selected_row, selected_col)
+                            elif event.key == pygame.K_9:
+                                fill_box(screen, 9, selected_row, selected_col)
+
+            if 0 not in board[0] and 0 not in board[1] and 0 not in board[2] and 0 not in board[3] and 0 not in board[4] and 0 not in board[5] and 0 not in board[6] and 0 not in board[7] and 0 not in board[8]:
+                completed = True
+                correct = validate(board)
+                draw_game_over(screen, correct)
+                pygame.display.update()
+
+                while True:
+                    event = pygame.event.wait()
                     if event.type == pygame.KEYDOWN:
-                        if pygame.key.get_pressed()[pygame.K_m]:
-                            correct = True
-                            completed = False
+                        if event.key == pygame.K_m:
+                            return_to_menu = True
+                            break
 
-                            difficulty = draw_game_start(screen)
-                            if difficulty == "easy":
-                                board = generate_sudoku(9, 2)
-                            elif difficulty == "medium":
-                                board = generate_sudoku(9, 40)
-                            elif difficulty == "hard":
-                                board = generate_sudoku(9, 50)
+            pygame.display.update()
 
-                            screen.fill(BG_COLOR)
-                            draw_board()
-                            draw_numbers()
+        if return_to_menu:
+            continue
 
-
-
-
-
-                for i in board:
-                    for j in i:
-                        print(j, end=" ")
-                    print("")
-                print("")
-
-
-
-        pygame.display.update()
+if __name__ == "__main__":
+    main_game_loop()

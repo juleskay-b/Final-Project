@@ -308,22 +308,6 @@ class Board: #rohan
 
         pass
 
-    def select(self, row, col):
-        pass
-
-    def click(self, row, col):
-        pass
-
-    def clear(self):
-        pass
-
-    def sketch(self, value):
-        pass
-
-    def place_number(self, value):
-
-        pass
-
     def reset_to_original(self): #Rohan
         self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
         self.selected_cell = None
@@ -359,14 +343,6 @@ class Board: #rohan
         if self.selected_cell and self.selected_cell.selected:
             self.selected_cell.sketch = value
 
-    def place_number(self, value):
-
-        pass
-
-    def reset_to_original(self):
-
-        pass
-
     def is_full(self):
         pass
 
@@ -386,14 +362,4 @@ class Board: #rohan
                     return False
         return True
 
-    def update_board(self):
-        pass
-
-    def find_empty(self):
-        pass
-
-    def check_board(self):
-        pass
-
-    pass
-
+# Julia - removed unused/unwritten functions
