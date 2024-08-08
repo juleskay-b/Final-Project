@@ -240,8 +240,7 @@ def validate(board): #Julia
     for i in range(len(board)):
         for j in range(len(board)):
             num = board[i][j]
-            if num != "0":
-                sets += [(i, num), (num, j), (i // 3, j // 3, num)]
+            sets += [(i, num), (num, j), (i // 3, j // 3, num)]
 
     for i in sets:
         if sets.count(i) > 1:
