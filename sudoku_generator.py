@@ -308,11 +308,6 @@ class Board: #rohan
 
         pass
 
-    def reset_to_original(self): #Rohan
-        self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
-        self.selected_cell = None
-        self.font = pygame.font.SysFont(None, 40)
-
     def draw(self): #rohan
         for i in range(10):
             thickness = bold_line_thickness if i % 3 == 0 else 1
@@ -347,13 +342,6 @@ class Board: #rohan
         if self.selected_cell: #Emily
             row, col = self.selected_cell
             self.cells[row][col].set_cell_value(value)
-
-
-    def reset_to_original(self): #Rohan/repeating function
-        self.cells = [[Cell(row, col) for col in range(9)] for row in range(9)]
-        self.selected_cell = None
-        self.font = pygame.font.SysFont(None, 40)
-        pass
 
     def reset_to_original(self): #Emily
         for i in range(self.width):
